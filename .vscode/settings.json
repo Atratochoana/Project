@@ -1,0 +1,7 @@
+
+{
+    "java.project.referencedLibraries": [
+        "gson-2.14.0.jar"
+    ],
+    "java.debug.settings.console": "internalConsole"
+}

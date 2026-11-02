@@ -1,0 +1,8 @@
+{
+    "Items": [
+        {   "Name": "Example",
+            "NumToCollect": 5,
+            "NumCollected": 4
+        }
+    ]
+}

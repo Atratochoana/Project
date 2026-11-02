@@ -1,0 +1,17 @@
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run ShoppingList",
+            "request": "launch",
+            "mainClass": "ShoppingList",
+            "console": "internalConsole",
+            "classPaths": [
+                "$Auto",
+                "${workspaceFolder}/gson-2.15.0.jar"
+            ]
+        }
+    ]
+}
