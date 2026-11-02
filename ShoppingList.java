@@ -11,6 +11,7 @@ public class ShoppingList {
         out o = new out();
         o.printBorder();
         addItem("item", 5);
+        readItems();
     }
 
     public static void addItem(String item, int count) {
@@ -33,6 +34,26 @@ public class ShoppingList {
         newItem.addProperty("NumsCollected", 0);
 
         items.add(newItem);
+    }
+
+    public static void updateItem(String item, int NumsCollected) {
+        String filename = "Items.json";
+
+    }
+
+    public static JsonObject readItems() {
+        String fileName = "Items.json";
+
+        JsonObject d;
+
+        try (FileReader reader = new FileReader(fileName)) {
+            d = JsonParser.parseReader(reader).getAsJsonObject();
+        } catch (Exception e) {
+            d = new JsonObject();
+        }
+
+        System.out.println(d);
+        return d;
     }
 };
 
