@@ -1,5 +1,4 @@
 import java.io.FileReader;
-import java.io.IOException;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -12,57 +11,49 @@ public class ShoppingList {
         out o = new out();
         o.printBorder();
         addItem("item", 5);
+        readItems();
     }
 
     public static void addItem(String item, int count) {
         String fileName = "Items.json";
 
+        JsonObject d;
+
         try (FileReader reader = new FileReader(fileName)) {
-                JsonObject d = JsonParser.parseReader(reader).getAsJsonObject();
-            }
-        catch (IOException) {
-            
-        }
+            d = JsonParser.parseReader(reader).getAsJsonObject();
+        } catch (Exception e) {
+            d = new JsonObject();
+            d.add("Items", new JsonArray());
+}
 
         JsonArray items =  d.getAsJsonArray("Items");
 
         JsonObject newItem = new JsonObject();
         newItem.addProperty("Name", item);
         newItem.addProperty("NumToCollect", count);
+        newItem.addProperty("NumsCollected", 0);
 
         items.add(newItem);
+    }
 
+    public static void updateItem(String item, int NumsCollected) {
+        String filename = "Items.json";
 
-        // try {
-        //     // Read the existing JSON file
-        //     JsonObject data;
+    }
 
-        //     try (FileReader reader = new FileReader(fileName)) {
-        //         data = JsonParser.parseReader(reader)
-        //                          .getAsJsonObject();
-        //     }
+    public static JsonObject readItems() {
+        String fileName = "Items.json";
 
-        //     // Get the array of shopping items
-        //     JsonArray items = data.getAsJsonArray("Items");
+        JsonObject d;
 
-        //     // Add a new item
-        //     items.add("Eggs");
+        try (FileReader reader = new FileReader(fileName)) {
+            d = JsonParser.parseReader(reader).getAsJsonObject();
+        } catch (Exception e) {
+            d = new JsonObject();
+        }
 
-        //     // Write the updated JSON back to the file
-        //     Gson gson = new GsonBuilder()
-        //             .setPrettyPrinting()
-        //             .create();
-
-        //     try (FileWriter writer = new FileWriter(fileName)) {
-        //         gson.toJson(data, writer);
-        //     }
-
-        //     System.out.println("Shopping list updated!");
-
-        // } catch (IOException e) {
-        //     System.out.println("Error accessing shopping.json: "
-        //             + e.getMessage());
-        // }
+        System.out.println(d);
+        return d;
     }
 };
 
@@ -98,3 +89,36 @@ class out {
     // public void addLine() {
     // }
 }
+
+
+
+        // try {
+        //     // Read the existing JSON file
+        //     JsonObject data;
+
+        //     try (FileReader reader = new FileReader(fileName)) {
+        //         data = JsonParser.parseReader(reader)
+        //                          .getAsJsonObject();
+        //     }
+
+        //     // Get the array of shopping items
+        //     JsonArray items = data.getAsJsonArray("Items");
+
+        //     // Add a new item
+        //     items.add("Eggs");
+
+        //     // Write the updated JSON back to the file
+        //     Gson gson = new GsonBuilder()
+        //             .setPrettyPrinting()
+        //             .create();
+
+        //     try (FileWriter writer = new FileWriter(fileName)) {
+        //         gson.toJson(data, writer);
+        //     }
+
+        //     System.out.println("Shopping list updated!");
+
+        // } catch (IOException e) {
+        //     System.out.println("Error accessing shopping.json: "
+        //             + e.getMessage());
+        // }
