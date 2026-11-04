@@ -1,6 +1,7 @@
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -11,10 +12,11 @@ public class ShoppingList {
     public static void main(String[] args) {
 
         out o = new out();
+        o.addLine("Test", 5, 10);
         o.printBorder();
         //addItem("apple", 2);
         //updateItem("test", 3);
-        removeItem("apple");
+        //removeItem("apple");
         readItems();
     }
 
@@ -47,7 +49,7 @@ public class ShoppingList {
             System.out.println("Failed");
         }
         
-        System.out.println("Items " + d.get("Items"));
+        //System.out.println("Items " + d.get("Items"));
     }
 
     public static void updateItem(String item, int NumsCollected) {
@@ -106,6 +108,7 @@ public class ShoppingList {
             JsonObject it = items.get(i).getAsJsonObject();
             if (it.get("Name").toString().equals('"' + item + '"')) {
                 items.remove(i);
+                System.out.println("Removed " + item);
             }
         }
 
@@ -137,7 +140,14 @@ public class ShoppingList {
 
 class out {
     int length = 20;
-    int depth = 15;
+    int depth = 2;
+    ArrayList<String> items = new ArrayList<String>();
+    ArrayList<Integer> collected = new ArrayList<Integer>();
+    ArrayList<Integer> toCollect = new ArrayList<Integer>();
+
+    public static void main(String[] args) {
+        
+    }
 
     public void printBorder() {
         System.out.print("+");
@@ -149,11 +159,10 @@ class out {
         for (int i = 0; i < depth -2; i++) {
             System.out.print("|");
 
-            System.out.print(" " + (i+1) + ".");
+            System.out.print(" " + (i+1) + ". ");
 
-            for (int x = 0; x < length-(5+((i+1)/10)); x++) {
-                System.out.print(" ");
-            }
+            System.out.print(items.get(i) + " [" + collected.get(i) + "/" + toCollect.get(i) + "]");
+
             System.out.println("|");
         }
         System.out.print("+");
@@ -162,5 +171,15 @@ class out {
         }
         System.out.println("+");
         
+    }
+
+    public void addLine(String item, int NumCollected, int NumToCollect) {
+        items.add(item);
+        collected.add(NumCollected);
+        toCollect.add(NumToCollect);
+        if ((item.length() + 3) > length) {
+            length = item.length();
+        }
+        depth++;
     }
 }
