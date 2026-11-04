@@ -12,7 +12,8 @@ public class ShoppingList {
 
         out o = new out();
         o.printBorder();
-        addItem("item", 5);
+        //addItem("apple", 2);
+        updateItem("apple", 1);
         readItems();
     }
 
@@ -25,7 +26,7 @@ public class ShoppingList {
             d = JsonParser.parseReader(reader).getAsJsonObject();
         } catch (Exception e) {
             d = new JsonObject();
-            d.add("Items", new JsonArray());
+            d.add("Test", new JsonArray());
 }
 
         JsonArray items =  d.getAsJsonArray("Items");
@@ -38,25 +39,50 @@ public class ShoppingList {
         items.add(newItem);
 
         try (FileWriter writer = new FileWriter("Items.json")) {
-            writer.write(items.toString());
+            writer.write(d.toString());
             writer.close();
 
         } catch (IOException e) {
             System.out.println("Failed");
         }
         
-
-        // try () {
-        //     gson.toJson(d.get("Items"), new FileWriter(fileName));
-        // } catch (IOException e) {
-        //     System.out.println(e);
-        // }
         System.out.println("Items " + d.get("Items"));
     }
 
     public static void updateItem(String item, int NumsCollected) {
-        String filename = "Items.json";
+        String fileName = "Items.json";
 
+        JsonObject d;
+
+        try (FileReader reader = new FileReader(fileName)) {
+            d = JsonParser.parseReader(reader).getAsJsonObject();
+        } catch (Exception e) {
+            d = new JsonObject();
+            d.add("Test", new JsonArray());
+        }
+
+        JsonArray items =  d.getAsJsonArray("Items");
+
+        int size = (items.asList().size());
+
+        for (int i = 0; i < size; i++) {
+            JsonObject it = items.get(i).getAsJsonObject();
+            if (it.get("Name").toString().equals(item)) {
+                it.addProperty("NumsCollected", NumsCollected);
+                System.out.println("Updated Nums Collected");
+            }
+        }
+
+        try (FileWriter writer = new FileWriter("Items.json")) {
+            writer.write(d.toString());
+            writer.close();
+
+        } catch (IOException e) {
+            System.out.println("Failed");
+        }
+
+        System.out.println("Test " + d.toString());
+        
     }
 
     public static JsonObject readItems() {
@@ -103,40 +129,4 @@ class out {
         System.out.println("+");
         
     }
-
-    // public void addLine() {
-    // }
 }
-
-
-
-        // try {
-        //     // Read the existing JSON file
-        //     JsonObject data;
-
-        //     try (FileReader reader = new FileReader(fileName)) {
-        //         data = JsonParser.parseReader(reader)
-        //                          .getAsJsonObject();
-        //     }
-
-        //     // Get the array of shopping items
-        //     JsonArray items = data.getAsJsonArray("Items");
-
-        //     // Add a new item
-        //     items.add("Eggs");
-
-        //     // Write the updated JSON back to the file
-        //     Gson gson = new GsonBuilder()
-        //             .setPrettyPrinting()
-        //             .create();
-
-        //     try (FileWriter writer = new FileWriter(fileName)) {
-        //         gson.toJson(data, writer);
-        //     }
-
-        //     System.out.println("Shopping list updated!");
-
-        // } catch (IOException e) {
-        //     System.out.println("Error accessing shopping.json: "
-        //             + e.getMessage());
-        // }

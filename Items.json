@@ -1,1 +1,1 @@
-[{"Name":"item","NumToCollect":5,"NumsCollected":0}]
+{"Items":[{"Name":"item","NumToCollect":5,"NumsCollected":0},{"Name":"test","NumToCollect":2,"NumsCollected":0},{"Name":"apple","NumToCollect":2,"NumsCollected":0}]}
