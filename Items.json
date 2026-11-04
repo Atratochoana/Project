@@ -1,9 +1,1 @@
-{
-  "Items": [
-    {
-      "Name": "Example",
-      "NumToCollect": 5,
-      "NumsCollected": 4
-    }
-  ]
-}
+[{"Name":"item","NumToCollect":5,"NumsCollected":0}]

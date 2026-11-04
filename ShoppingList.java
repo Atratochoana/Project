@@ -1,4 +1,6 @@
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -34,6 +36,22 @@ public class ShoppingList {
         newItem.addProperty("NumsCollected", 0);
 
         items.add(newItem);
+
+        try (FileWriter writer = new FileWriter("Items.json")) {
+            writer.write(items.toString());
+            writer.close();
+
+        } catch (IOException e) {
+            System.out.println("Failed");
+        }
+        
+
+        // try () {
+        //     gson.toJson(d.get("Items"), new FileWriter(fileName));
+        // } catch (IOException e) {
+        //     System.out.println(e);
+        // }
+        System.out.println("Items " + d.get("Items"));
     }
 
     public static void updateItem(String item, int NumsCollected) {
