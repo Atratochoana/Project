@@ -13,7 +13,7 @@ public class ShoppingList {
         out o = new out();
         o.printBorder();
         //addItem("apple", 2);
-        updateItem("apple", 1);
+        updateItem("test", 3);
         readItems();
     }
 
@@ -67,7 +67,7 @@ public class ShoppingList {
 
         for (int i = 0; i < size; i++) {
             JsonObject it = items.get(i).getAsJsonObject();
-            if (it.get("Name").toString().equals(item)) {
+            if (it.get("Name").toString().equals('"' + item + '"')) {
                 it.addProperty("NumsCollected", NumsCollected);
                 System.out.println("Updated Nums Collected");
             }
