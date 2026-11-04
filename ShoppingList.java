@@ -13,7 +13,8 @@ public class ShoppingList {
         out o = new out();
         o.printBorder();
         //addItem("apple", 2);
-        updateItem("test", 3);
+        //updateItem("test", 3);
+        removeItem("apple");
         readItems();
     }
 
@@ -83,6 +84,39 @@ public class ShoppingList {
 
         System.out.println("Test " + d.toString());
         
+    }
+
+    public static void removeItem(String item) {
+        String fileName = "Items.json";
+
+        JsonObject d;
+
+        try (FileReader reader = new FileReader(fileName)) {
+            d = JsonParser.parseReader(reader).getAsJsonObject();
+        } catch (Exception e) {
+            d = new JsonObject();
+            d.add("Test", new JsonArray());
+        }
+
+        JsonArray items =  d.getAsJsonArray("Items");
+
+        int size = (items.asList().size());
+
+        for (int i = 0; i < size; i++) {
+            JsonObject it = items.get(i).getAsJsonObject();
+            if (it.get("Name").toString().equals('"' + item + '"')) {
+                items.remove(i);
+            }
+        }
+
+        try (FileWriter writer = new FileWriter("Items.json")) {
+            writer.write(d.toString());
+            writer.close();
+
+        } catch (IOException e) {
+            System.out.println("Failed");
+        }
+
     }
 
     public static JsonObject readItems() {
