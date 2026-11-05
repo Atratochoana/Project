@@ -12,7 +12,12 @@ public class ShoppingList {
     public static void main(String[] args) {
 
         out o = new out();
-        o.addLine("Test", 5, 10);
+        o.addLine("Something", 10, 10);
+        o.addLine("SomethingElse", 5, 10);
+        o.addLine("Item", 5, 5);
+        o.addLine("BlahBlahBlahb", 15, 5);
+
+
         o.printBorder();
         //addItem("apple", 2);
         //updateItem("test", 3);
@@ -139,7 +144,7 @@ public class ShoppingList {
 };
 
 class out {
-    int length = 20;
+    int length = 10;
     int depth = 2;
     ArrayList<String> items = new ArrayList<String>();
     ArrayList<Integer> collected = new ArrayList<Integer>();
@@ -161,7 +166,15 @@ class out {
 
             System.out.print(" " + (i+1) + ". ");
 
-            System.out.print(items.get(i) + " [" + collected.get(i) + "/" + toCollect.get(i) + "]");
+            System.out.print(items.get(i));
+
+            if ((items.get(i).length() + 13 + (collected.get(i)/10) + (toCollect.get(i)/10)) < length) {
+                for (int x = 0; x < (length - 13 - (collected.get(i)/10) - (toCollect.get(i)/10) - items.get(i).length()); x++) {
+                    System.out.print(" ");
+                }
+            }
+
+            System.out.print(" [" + collected.get(i) + "/" + toCollect.get(i) + "] ");
 
             System.out.println("|");
         }
@@ -177,8 +190,8 @@ class out {
         items.add(item);
         collected.add(NumCollected);
         toCollect.add(NumToCollect);
-        if ((item.length() + 3) > length) {
-            length = item.length();
+        if ((item.length() + 13 + (NumCollected/10) + (NumToCollect/10)) > length) {
+            length = item.length() + 13 + (NumCollected/10) + (NumToCollect/10);
         }
         depth++;
     }
