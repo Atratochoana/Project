@@ -2,6 +2,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -9,20 +10,57 @@ import com.google.gson.JsonParser;
 
 
 public class ShoppingList {
+    private static final out o = new out();
+
     public static void main(String[] args) {
+        printCurrent();
 
-        out o = new out();
-        o.addLine("Something", 10, 10);
-        o.addLine("SomethingElse", 1000, 5);
-        o.addLine("Item", 5, 5);
-        o.addLine("BlahBlahBlahb", 15, 5);
+        int selection = 0;
+        do {
 
+            o.printBorder();
 
-        o.printBorder();
-        //addItem("apple", 2);
-        //updateItem("test", 3);
-        //removeItem("apple");
-        readItems();
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("1. Add a new item to your shopping list");
+            System.out.println("2. Update how many of one item you have collected");
+            System.out.println("3. Remove an Item");
+            System.out.println("4. Exit the program");
+            int output = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (output){
+                case 1:
+                    System.out.println("Enter your new Items name ");
+                    String name = scanner.nextLine();
+                    System.out.println("Enter how much of this product you want to collect ");
+                    int count = scanner.nextInt();
+                    scanner.nextLine();
+                    addItem(name, count);
+                    break;
+                case 2:
+                    System.out.println("Enter your Items name ");
+                    name = scanner.nextLine();
+                    System.out.println("Enter how much of this product have you collected ");
+                    count = scanner.nextInt();
+                    scanner.nextLine();
+                    updateItem(name, count);
+                    break;
+                case 3:
+                    System.out.println("Enter your Items name ");
+                    name = scanner.nextLine();
+                    scanner.nextLine();
+                    removeItem(name);
+                    break;
+                case 4:
+                    break;
+                default:
+                    System.out.println("Invalid input try again.");
+                    break;
+                    
+            }
+            
+        } while (selection != 4);
     }
 
     public static void addItem(String item, int count) {
@@ -54,6 +92,7 @@ public class ShoppingList {
             System.out.println("Failed");
         }
         
+        o.addLine(item, 0, count);
         //System.out.println("Items " + d.get("Items"));
     }
 
@@ -66,7 +105,7 @@ public class ShoppingList {
             d = JsonParser.parseReader(reader).getAsJsonObject();
         } catch (Exception e) {
             d = new JsonObject();
-            d.add("Test", new JsonArray());
+            d.add(item, new JsonArray());
         }
 
         JsonArray items =  d.getAsJsonArray("Items");
@@ -138,8 +177,22 @@ public class ShoppingList {
             d = new JsonObject();
         }
 
-        System.out.println(d);
+        //System.out.println(d);
         return d;
+    }
+
+    public static void printCurrent() {
+        JsonObject d = readItems();
+
+        JsonArray items =  d.getAsJsonArray("Items");
+
+        int size = (items.asList().size());
+
+        for (int i = 0; i < size; i++) {
+            JsonObject it = items.get(i).getAsJsonObject();
+            
+            o.addLine(it.get("Name").getAsString(), it.get("NumsCollected").getAsInt(), it.get("NumToCollect").getAsInt());
+        }
     }
 };
 
@@ -149,10 +202,6 @@ class out {
     ArrayList<String> items = new ArrayList<String>();
     ArrayList<Integer> collected = new ArrayList<Integer>();
     ArrayList<Integer> toCollect = new ArrayList<Integer>();
-
-    public static void main(String[] args) {
-        
-    }
 
     public void printBorder() {
         System.out.print("+");

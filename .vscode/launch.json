@@ -6,7 +6,7 @@
             "type": "java",
             "name": "out",
             "request": "launch",
-            "mainClass": "out",
+            "mainClass": "ShoppingList",
             "projectName": "my-project"
         },
         {
