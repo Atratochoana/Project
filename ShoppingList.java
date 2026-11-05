@@ -13,7 +13,7 @@ public class ShoppingList {
 
         out o = new out();
         o.addLine("Something", 10, 10);
-        o.addLine("SomethingElse", 5, 10);
+        o.addLine("SomethingElse", 1000, 5);
         o.addLine("Item", 5, 5);
         o.addLine("BlahBlahBlahb", 15, 5);
 
@@ -168,8 +168,8 @@ class out {
 
             System.out.print(items.get(i));
 
-            if ((items.get(i).length() + 13 + (collected.get(i)/10) + (toCollect.get(i)/10)) < length) {
-                for (int x = 0; x < (length - 13 - (collected.get(i)/10) - (toCollect.get(i)/10) - items.get(i).length()); x++) {
+            if (items.get(i).length() + 11 + ((int)(Math.log10(collected.get(i)))+1) + ((int)(Math.log10(toCollect.get(i)))+1) < length) {
+                for (int x = 0; x < (length - 11 - ((int)(Math.log10(collected.get(i)))+1) - ((int)(Math.log10(toCollect.get(i)))+1) - items.get(i).length()); x++) {
                     System.out.print(" ");
                 }
             }
@@ -190,8 +190,8 @@ class out {
         items.add(item);
         collected.add(NumCollected);
         toCollect.add(NumToCollect);
-        if ((item.length() + 13 + (NumCollected/10) + (NumToCollect/10)) > length) {
-            length = item.length() + 13 + (NumCollected/10) + (NumToCollect/10);
+        if ((item.length() + 11 + ((int)(Math.log10(NumCollected))+1) + ((int)(Math.log10(NumToCollect)+1))) > length) {
+            length = item.length() + 11 + ((int)(Math.log10(NumCollected))+1) + ((int)(Math.log10(NumToCollect)+1));
         }
         depth++;
     }

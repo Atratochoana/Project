@@ -4,6 +4,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "out",
+            "request": "launch",
+            "mainClass": "out",
+            "projectName": "my-project"
+        },
+        {
+            "type": "java",
             "name": "Run ShoppingList",
             "request": "launch",
             "mainClass": "ShoppingList",
