@@ -49,7 +49,6 @@ public class ShoppingList {
                 case 3:
                     System.out.println("Enter your Items name ");
                     name = scanner.nextLine();
-                    scanner.nextLine();
                     removeItem(name);
                     break;
                 case 4:
@@ -151,6 +150,7 @@ public class ShoppingList {
             JsonObject it = items.get(i).getAsJsonObject();
             if (it.get("Name").toString().equals('"' + item + '"')) {
                 items.remove(i);
+                o.removeItem(i);
                 System.out.println("Removed " + item);
             }
         }
@@ -162,7 +162,6 @@ public class ShoppingList {
         } catch (IOException e) {
             System.out.println("Failed");
         }
-
     }
 
     public static JsonObject readItems() {
@@ -247,5 +246,26 @@ class out {
 
     public void updateItem(int index, int num){
         collected.set(index, num);
+    }
+
+    public void removeItem(int index){
+        items.remove(index);
+        collected.remove(index);
+        toCollect.remove(index);
+        depth--;
+
+        for (int i=0; i < items.size();i++) {
+
+            int maxLen = 0;
+
+            String item = items.get(i);
+            int NumCollected = collected.get(i);
+            int NumToCollect = toCollect.get(i);
+            int requiredLength = item.length() + 11 + Integer.toString(NumCollected).length() + Integer.toString(NumToCollect).length();
+            if (requiredLength > maxLen) {
+                maxLen = requiredLength;
+            }
+            length = maxLen;
+        }
     }
 }
