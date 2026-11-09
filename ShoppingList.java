@@ -117,7 +117,7 @@ public class ShoppingList {
             JsonObject it = items.get(i).getAsJsonObject();
             if (it.get("Name").toString().equals('"' + item + '"')) {
                 it.addProperty("NumsCollected", NumsCollected);
-                System.out.println("Updated Nums Collected");
+                o.updateItem(i, NumsCollected);
             }
         }
 
@@ -128,8 +128,6 @@ public class ShoppingList {
         } catch (IOException e) {
             System.out.println("Failed");
         }
-
-        System.out.println("Test " + d.toString());
         
     }
 
@@ -245,5 +243,9 @@ class out {
         int requiredLength = item.length() + 11 + Integer.toString(NumCollected).length() + Integer.toString(NumToCollect).length();
         length = Math.max(length, requiredLength);
         depth++;
+    }
+
+    public void updateItem(int index, int num){
+        collected.set(index, num);
     }
 }
