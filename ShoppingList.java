@@ -53,6 +53,7 @@ public class ShoppingList {
                     removeItem(name);
                     break;
                 case 4:
+                    selection = 4;
                     break;
                 default:
                     System.out.println("Invalid input try again.");
@@ -217,10 +218,12 @@ class out {
 
             System.out.print(items.get(i));
 
-            if (items.get(i).length() + 11 + ((int)(Math.log10(collected.get(i)))+1) + ((int)(Math.log10(toCollect.get(i)))+1) < length) {
-                for (int x = 0; x < (length - 11 - ((int)(Math.log10(collected.get(i)))+1) - ((int)(Math.log10(toCollect.get(i)))+1) - items.get(i).length()); x++) {
-                    System.out.print(" ");
-                }
+            int collectedDigits = Integer.toString(collected.get(i)).length();
+            int targetDigits = Integer.toString(toCollect.get(i)).length();
+            int end = length - 11 - collectedDigits - targetDigits - items.get(i).length();
+
+            for (int x = 0; x < Math.max(0, end); x++) {
+                System.out.print(" ");
             }
 
             System.out.print(" [" + collected.get(i) + "/" + toCollect.get(i) + "] ");
@@ -239,9 +242,8 @@ class out {
         items.add(item);
         collected.add(NumCollected);
         toCollect.add(NumToCollect);
-        if ((item.length() + 11 + ((int)(Math.log10(NumCollected))+1) + ((int)(Math.log10(NumToCollect)+1))) > length) {
-            length = item.length() + 11 + ((int)(Math.log10(NumCollected))+1) + ((int)(Math.log10(NumToCollect)+1));
-        }
+        int requiredLength = item.length() + 11 + Integer.toString(NumCollected).length() + Integer.toString(NumToCollect).length();
+        length = Math.max(length, requiredLength);
         depth++;
     }
 }
