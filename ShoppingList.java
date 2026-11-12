@@ -246,6 +246,20 @@ class out {
 
     public void updateItem(int index, int num){
         collected.set(index, num);
+
+        for (int i=0; i < items.size();i++) {
+
+            int maxLen = 0;
+
+            String item = items.get(i);
+            int NumCollected = collected.get(i);
+            int NumToCollect = toCollect.get(i);
+            int requiredLength = item.length() + 11 + Integer.toString(NumCollected).length() + Integer.toString(NumToCollect).length();
+            if (requiredLength > maxLen) {
+                maxLen = requiredLength;
+            }
+            length = maxLen;
+        }
     }
 
     public void removeItem(int index){
