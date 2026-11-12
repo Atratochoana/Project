@@ -146,14 +146,18 @@ public class ShoppingList {
 
         int size = (items.asList().size());
 
+        boolean removed = false;
+
         for (int i = 0; i < size; i++) {
             JsonObject it = items.get(i).getAsJsonObject();
             if (it.get("Name").toString().equals('"' + item + '"')) {
                 items.remove(i);
                 o.removeItem(i);
+                removed = true;
                 System.out.println("Removed " + item);
             }
         }
+        if (!removed) System.out.println("Item name not found! Please try again.");
 
         try (FileWriter writer = new FileWriter("Items.json")) {
             writer.write(d.toString());
